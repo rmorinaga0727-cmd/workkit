@@ -53,3 +53,12 @@
 - 制限: localhostのみ使用、外部通信遮断。index.html・既存テスト・debug.log・devは未変更。追加パッケージ・Commit・Push・本番反映なし。
 - ローカル保存: 対象はtests/sales-type.spec.jsとこの進捗ファイルの2ファイルのみ。コミット名はtest: add sales type diagnosis test。秘密情報・差分を確認し、テスト再実行なし。再開時は最新コミットとGit状態で保存結果を確認。
 - 次の作業: ユーザー指定の次の操作テスト。Push・本番公開は行わない。
+
+## GitHub Actions構築（ローカル完了・2026-10-10）
+
+- ブランチ: dev/workkit-setup。作成: .github/workflows/playwright.yml。更新: この進捗ファイル。
+- 設定: dev/**へのPush、main向けPR。Node.js 24、npm ci、Chromium（Linux依存を含む）、既存テスト全件。contents: readのみ、15分タイムアウト、同一ブランチの古い実行をキャンセル。デプロイなし。
+- 検証: 既存Playwright同梱YAMLパーサーで構文と起動条件・権限・タイムアウト・キャンセル・Node.js 24・実行コマンドを検証しPASS。公式CI手順を照合。ローカルChromiumで全2件を1回実行し2 passed（7.1秒）。追加パッケージ・修正再実行なし。
+- ローカル保存: 対象は.github/workflows/playwright.ymlとこの進捗ファイルのみ。コミット名: ci: add Playwright GitHub Actions workflow。秘密情報なし。再開時は最新コミットとGit状態を確認。
+- 未完了・次の作業: GitHub上のLinux実行は未確認。Push承認後、GitHub Actionsの利用可能な無料枠・課金設定を確認して開発ブランチで実行を確認する。今回は外部実行・課金・Push・本番公開なし。
+- 注意: index.html・既存テスト・debug.log・devは未変更。デプロイ工程・秘密情報・書き込み権限は設定していない。
