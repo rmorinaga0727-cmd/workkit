@@ -1,0 +1,24 @@
+{
+  "name": "workkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmorinaga0727-cmd/workkit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rmorinaga0727-cmd/workkit/issues"
+  },
+  "homepage": "https://github.com/rmorinaga0727-cmd/workkit#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0"
+  }
+}
