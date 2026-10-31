@@ -1,0 +1,24 @@
+/* Navigator accents only. All source images are reused without pixel edits. */
+.character-guide{display:block;position:relative;z-index:2;border:0;padding:0;background:none;color:inherit;cursor:pointer;flex-shrink:0;touch-action:manipulation;min-width:44px;min-height:44px;border-radius:6px;isolation:isolate}
+.guide-figure{display:block;width:100%;height:100%;transform-origin:50% 85%;pointer-events:none}
+.guide-figure img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.character-guide:focus-visible{outline:3px solid #2874d6;outline-offset:3px}
+.character-guide:after{content:'';position:absolute;bottom:2px;left:17%;right:17%;height:6px;background:#1e486616;border-radius:50%;z-index:-1;pointer-events:none}
+#conversation .guide-heading{padding-right:124px;min-height:114px}
+.guide-conversation{position:absolute;right:2px;top:0;width:100px;height:108px}
+.guide-habits{float:left;width:78px;height:86px;margin:0 14px 5px 0}
+.guide-growth{float:right;width:72px;height:80px;margin:0 0 4px 12px}
+#growth .practice-panel:after{content:'';display:block;clear:both}
+@media(max-width:650px){
+ #conversation .guide-heading{padding-right:90px;min-height:104px}
+ .guide-conversation{width:76px;height:84px;right:0;top:1px}
+ .guide-habits{width:70px;height:80px;margin-right:11px}
+ .guide-growth{width:64px;height:74px;margin-left:10px}
+}
+@media(max-width:350px){
+ #conversation .guide-heading{padding-right:72px}
+ .guide-conversation{width:62px;height:74px}
+ .guide-habits{width:60px;height:70px;margin-right:9px}
+ .guide-growth{width:56px;height:68px;margin-left:9px}
+}
+@media(prefers-reduced-motion:reduce){.guide-figure,.character-guide{animation:none!important;transition:none!important}}

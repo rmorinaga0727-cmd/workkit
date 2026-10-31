@@ -1,0 +1,11 @@
+/* V3.3: motion only; no typography, spacing or layout overrides. */
+.button,.answer-option,.customer-tabs button,.practice-tabs button,.character-guide{
+ transition-duration:300ms;transition-timing-function:cubic-bezier(.25,.65,.3,1);
+}
+.button.primary:after{transition-duration:800ms}
+.character-window[role=button]{cursor:pointer}
+.character-window[role=button]:focus-visible{outline:2px solid #286cbe;outline-offset:4px;border-radius:6px}
+/* Prevent older CSS transitions from running alongside the explicit progress animation. */
+.progress-track span{transition:none}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+.motion-off *,.motion-off *:before,.motion-off *:after{animation:none!important;transition:none!important}

@@ -1,0 +1,14 @@
+/* Isolation keeps the approved diagnosis typography and motion independent of the existing tool styles. */
+#appShell.diagnosis-open{overflow:hidden;background:#f4f7fb}
+#appShell.diagnosis-open .appbar{display:none}
+#appShell.diagnosis-open #toolRoot{padding:0;max-width:none;margin:0;height:100vh;height:100dvh}
+#diagnosis-frame{display:block;border:0;width:100%;height:100vh;height:100dvh;background:white}
+body.diagnosis-active #aiFab,body.diagnosis-active #aiPanel{display:none!important}
+.diagnosis-context{border-left:3px solid #3277bf;margin-bottom:16px;background:#f5f9ff}
+.diagnosis-context-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.diagnosis-context h2{font-size:21px}.diagnosis-context h3{font-size:18px;margin:12px 0 6px}
+.diagnosis-context p,.diagnosis-enable{font-size:16px;line-height:1.7}
+.diagnosis-enable{display:flex;align-items:center;gap:9px;min-height:44px}
+.diagnosis-enable input{width:20px;height:20px;flex-shrink:0}
+.diagnosis-guide-text{white-space:pre-wrap}.diagnosis-context pre{font:inherit;font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.diagnosis-context summary{cursor:pointer;min-height:44px;padding:9px 0}
