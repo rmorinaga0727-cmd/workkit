@@ -1,0 +1,6 @@
+/* Scope and availability notices only; the approved home/diagnosis styles are retained. */
+#release-notice{width:min(480px,calc(100vw - 32px));border:1px solid #dce6f1;border-radius:20px;background:#fbfdff;color:#172a43;padding:28px;box-shadow:0 24px 90px #081b4540}
+#release-notice::backdrop{background:#07162999;backdrop-filter:blur(5px)}
+#release-notice h2{font-size:22px;margin:0 0 14px}#release-notice p{font-size:14px;line-height:1.85;margin:0 0 20px}
+.catalog-tool.release-updating small{color:var(--f-accent,#ff964f)}
+#aiFab,#aiPanel,.probox,.pro-locked,.service-card,[data-open="pro"],#proPurchase,#proSyncArea{display:none!important}
