@@ -11,7 +11,7 @@ document.body.append(dialog);dialog.querySelector('button').onclick=()=>dialog.c
 function notice(key){
  const label=window.FUTURE_TOOLS.find(t=>t.key===key)?.name||'このサービス';
  dialog.querySelector('h2').textContent=updating.has(key)?'大幅アップデート中':'新規受付を停止しています';
- dialog.querySelector('p').textContent=updating.has(key)?label+'は大幅アップデート中です。現在は営業スタイル診断・営業スクリプト・アウト返しをご利用いただけます。':'現在、Pro・有料サービスの新規受付は停止しています。価格・申込の案内は行っていません。';
+ dialog.querySelector('p').textContent=updating.has(key)?label+'は大幅アップデート中です。現在は営業スタイル診断・営業スクリプト・アウト返し・営業予実管理をご利用いただけます。':'現在、Pro・有料サービスの新規受付は停止しています。価格・申込の案内は行っていません。';
  if(!dialog.open)dialog.showModal();
 }
 function route(key,replace=false){const u=new URL(home);if(key)u.searchParams.set('tool',key);history[replace?'replaceState':'pushState']({tool:key},'',u.pathname+u.search+u.hash);}
