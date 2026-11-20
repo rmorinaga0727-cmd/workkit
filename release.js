@@ -1,9 +1,9 @@
 'use strict';
 // Release routing only. Approved diagnosis/script/content engines remain unchanged.
 (()=>{
-const ready=new Set(['sales_type','script','objection']);
-const updating=new Set(['forecast','premeeting','closing','navi','loss']);
-const home=new URL('./',location.href),objection=new URL('tools/objection/',home);
+const ready=new Set(['sales_type','script','objection','forecast']);
+const updating=new Set(['premeeting','closing','navi','loss']);
+const home=new URL('./',location.href),objection=new URL('tools/objection/',home),forecast=new URL('tools/forecast/',home);
 const originalOpen=openTool,originalRender=renderTool,originalClose=closeTool;
 const dialog=document.createElement('dialog');dialog.id='release-notice';dialog.setAttribute('aria-labelledby','release-notice-title');
 dialog.innerHTML='<h2 id="release-notice-title">大幅アップデート中</h2><p id="release-notice-text"></p><button class="btn primary" id="release-notice-close">閉じる</button>';
@@ -17,11 +17,12 @@ function notice(key){
 function route(key,replace=false){const u=new URL(home);if(key)u.searchParams.set('tool',key);history[replace?'replaceState':'pushState']({tool:key},'',u.pathname+u.search+u.hash);}
 openTool=function(key){
  if(key==='objection'){persistState(true);location.assign(objection.href);return;}
+ if(key==='forecast'){persistState(true);location.assign(forecast.href);return;}
  if(!ready.has(key)&&key!=='profile'){notice(key);return;}
  originalOpen(key);route(key);
 };
 renderTool=function(key){
- if(key==='objection'){openTool(key);return;}
+ if(key==='objection'||key==='forecast'){openTool(key);return;}
  if(!ready.has(key)&&key!=='profile'){notice(key);return;}
  originalRender(key);
 };
@@ -31,7 +32,7 @@ document.getElementById('backBtn').onclick=()=>closeTool();
 document.addEventListener('click',event=>{
  const element=event.target.closest('[data-open]');if(!element)return;
  const key=element.dataset.open;
- if(key==='objection'||!ready.has(key)&&key!=='profile'){
+ if(key==='objection'||key==='forecast'||!ready.has(key)&&key!=='profile'){
   event.preventDefault();event.stopImmediatePropagation();openTool(key);
  }
 },true);
@@ -39,15 +40,16 @@ for(const key of updating){
  document.querySelectorAll('.catalog-tool[data-open="'+key+'"] small').forEach(e=>e.textContent='大幅アップデート中');
  document.querySelectorAll('.catalog-tool[data-open="'+key+'"]').forEach(e=>{e.classList.add('release-updating');e.setAttribute('aria-label',(window.FUTURE_TOOLS.find(t=>t.key===key)?.name||key)+'：大幅アップデート中');});
 }
-document.querySelector('.catalog-head>span').textContent='3機能公開・5機能は大幅アップデート中';
+document.querySelector('.catalog-head>span').textContent='4機能公開・4機能は大幅アップデート中';
 // Local storage restoration describes this browser, not service activation or account recovery.
 const saved=document.getElementById('saveStatus');if(saved.textContent==='復元済み')saved.textContent='端末の保存を復元';
 function loadRoute(){const key=new URL(location.href).searchParams.get('tool');
  if(key==='objection'){location.replace(objection.href);return;}
+ if(key==='forecast'){location.replace(forecast.href);return;}
  if(key&&ready.has(key)||key==='profile'){originalOpen(key);return;}
  if(key)notice(key);
 }
 addEventListener('popstate',()=>{const key=new URL(location.href).searchParams.get('tool');if(!key)originalClose();else loadRoute();});
 loadRoute();
-window.WorkKitRelease=Object.freeze({version:'FUTURE-WORKKIT-V1.1-three-tools-20261031',publicTools:[...ready],updatingTools:[...updating],intakePaused:true});
+window.WorkKitRelease=Object.freeze({version:'FUTURE-WORKKIT-V1.2-four-tools-forecast',publicTools:[...ready],updatingTools:[...updating],intakePaused:true});
 })();
