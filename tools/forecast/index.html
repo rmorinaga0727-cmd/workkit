@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="WORKKITの無料営業予実管理。着地見込み、残必要件数、ファネル逆算、改善シミュレーションを1画面で確認。">
+<meta name="theme-color" content="#fffaf6">
+<title>営業予実管理・逆算ダッシュボード｜WORKKIT</title>
+<link rel="canonical" href="https://workkit-shigoto.pages.dev/tools/forecast/">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<a href="#inputs" class="skip">入力欄へ移動</a>
+<header class="site-head">
+  <div class="top-inner"><a class="brand" href="../../" aria-label="WORKKITのトップページへ"><span class="brand-logo">W<span>.</span></span> WORKKIT</a><a class="home-link" href="../../">ツール一覧に戻る <span aria-hidden="true">↗</span></a></div>
+</header>
+<main class="container">
+  <section class="hero">
+    <div><p class="eyebrow">WORKKIT / SALES PERFORMANCE</p><h1>数字を、<span>次の一手</span>に。</h1><p class="lead">営業予実管理・逆算ダッシュボード</p><p class="description">目標と実績を入力するだけで、着地見込み、未達ギャップ、必要な行動量、改善効果を可視化。個人・チームどちらでも使える無料ツールです。</p><div class="chips"><span>無料・登録不要</span><span>ブラウザ内に保存</span><span>CSV出力対応</span></div></div>
+    <div class="hero-panel"><div class="hero-panel-top">PERFORMANCE CONTROL <span>V2.0</span></div><div class="hero-figure"><span>目標との差を</span><b>行動に変える。</b></div><div class="hero-rule"><i></i><i></i><i></i><i></i><i></i><i></i></div><p>PLAN → ACTUAL → FORECAST → ACTION</p></div>
+  </section>
+
+  <section class="workspace" id="inputs" aria-label="予実管理の設定">
+    <div class="section-heading"><div><p class="eyebrow">01 / INPUT</p><h2>予実と営業ファネルを設定</h2></div><span id="storageStatus" class="save-status" role="status">この端末にのみ保存</span></div>
+    <div class="form-card">
+      <div class="preset-line"><div><h3>営業モデル</h3><p>業務に近いモデルを選択。ステージ名やCVRも自由に変更できます。</p></div><div class="preset-actions"><button type="button" class="btn secondary" data-preset="tele">テレセールス</button><button type="button" class="btn secondary" data-preset="field">商談型営業</button><button type="button" class="btn secondary" data-preset="simple">シンプル</button></div></div>
+      <form id="forecastForm" novalidate>
+        <div class="settings-grid">
+          <div class="field"><label for="period">集計対象名</label><input id="period" name="period" type="text" maxlength="60" placeholder="例：2026年11月"></div>
+          <div class="field"><label for="target">期間の最終目標 <span class="required">必須</span></label><div class="input-suffix"><input id="target" name="target" type="number" min="0" max="100000000" step="1" required><span>件</span></div></div>
+          <div class="field"><label for="achieved">期間内の最終実績 <span class="required">必須</span></label><div class="input-suffix"><input id="achieved" name="achieved" type="number" min="0" max="100000000" step="1" required><span>件</span></div></div>
+          <div class="field"><label for="elapsed">経過営業日 <span class="required">必須</span></label><div class="input-suffix"><input id="elapsed" name="elapsed" type="number" min="0" max="366" step="1" required><span>日</span></div></div>
+          <div class="field"><label for="remaining">残営業日 <span class="required">必須</span></label><div class="input-suffix"><input id="remaining" name="remaining" type="number" min="0" max="366" step="1" required><span>日</span></div></div>
+          <div class="field"><label for="members">稼働メンバー数 <span class="required">必須</span></label><div class="input-suffix"><input id="members" name="members" type="number" min="1" max="10000" step="1" required><span>人</span></div></div>
+        </div>
+        <div class="funnel-top"><div><h3>営業ファネル</h3><p>左から成果に近づく順番で登録。実績はこの期間内の各ステージ到達件数を入力します。</p></div><button class="btn secondary" id="addStage" type="button">＋ ステージ追加</button></div>
+        <div class="table-scroll"><table class="stage-table"><thead><tr><th scope="col">営業ステージ</th><th scope="col">期間実績（件）</th><th scope="col">次への計画CVR（%）</th><th scope="col" class="small-col">操作</th></tr></thead><tbody id="stageRows"></tbody></table></div>
+        <p class="table-help">※最終ステージの実績は上の「最終実績」に一致させます。CVRは見込みの転換率で、最後の行には入力不要です。異なる案件期間が混在する場合、実績から算出したCVRは参考値となります。</p>
+        <div class="controls"><button id="analyze" class="btn primary" type="submit">予実を分析する <span aria-hidden="true">↗</span></button><button class="btn secondary" id="example" type="button">サンプルを入力</button><button class="btn subtle" id="reset" type="button">初期化</button></div>
+        <p id="errors" class="errors" role="alert" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="analysis" id="results" aria-label="分析結果">
+    <div class="section-heading"><div><p class="eyebrow">02 / PERFORMANCE</p><h2>現在地と着地をつかむ</h2></div><span id="periodLabel" class="period-label">サンプル結果</span></div>
+    <div class="stats">
+      <article class="stat"><span>目標達成率</span><strong id="attainment">—</strong><small id="attainmentNote">目標に対する実績</small></article>
+      <article class="stat"><span>期間目標との差</span><strong id="gap">—</strong><small>現時点の残目標</small></article>
+      <article class="stat"><span>現在ペースでの着地見込み</span><strong id="projection">—</strong><small id="projectionNote">経過営業日ベースの単純推計</small></article>
+      <article class="stat"><span>残り1人1営業日あたり必要成約</span><strong id="dailyClose">—</strong><small id="dailyCloseNote">残目標から逆算</small></article>
+    </div>
+    <div class="insight-grid">
+      <article class="surface" aria-labelledby="paceTitle"><h3 id="paceTitle">目標と着地見込み</h3><p class="subtext">経過営業日までの成約ペースが続いた場合の参考値です。</p><div class="bars"><div><div class="bar-top"><span>現在の最終実績</span><b id="actualBarLabel">—</b></div><div class="bar-track"><i class="actual-bar" id="actualBar"></i></div></div><div><div class="bar-top"><span>ペース予測</span><b id="forecastBarLabel">—</b></div><div class="bar-track"><i class="forecast-bar" id="forecastBar"></i></div></div><div><div class="bar-top"><span>最終目標</span><b id="targetBarLabel">—</b></div><div class="bar-track"><i class="target-bar" id="targetBar"></i></div></div></div><p id="paceMessage" class="interpret"></p></article>
+      <article class="surface action-surface" aria-labelledby="actionTitle"><h3 id="actionTitle">次に打つべき手</h3><div id="insightList" class="recommendations" aria-live="polite"></div></article>
+    </div>
+  </section>
+
+  <section class="analysis" aria-labelledby="reverseTitle">
+    <div class="section-heading"><div><p class="eyebrow">03 / REVERSE PLANNING</p><h2 id="reverseTitle">残目標から行動を逆算</h2></div><span class="period-label">残期間の新規活動量の参考値</span></div>
+    <div class="surface"><div class="table-scroll"><table class="result-table"><thead><tr><th scope="col">ステージ</th><th scope="col">必要総数</th><th scope="col">チーム1日</th><th scope="col">1人1日</th><th scope="col">実績CVR / 計画CVR</th></tr></thead><tbody id="resultRows"></tbody></table></div><p class="method-note">既に進行中の見込み案件を差し引かず、残目標をすべて新規活動から作る場合の保守的なシミュレーションです。端数は切り上げます。既存パイプラインや案件のタイムラグは反映していません。</p></div>
+  </section>
+
+  <section class="analysis" aria-labelledby="scenarioTitle">
+    <div class="section-heading"><div><p class="eyebrow">04 / IMPROVEMENT</p><h2 id="scenarioTitle">改善シミュレーション</h2></div></div>
+    <div class="surface"><div class="scenario-controls"><div class="field"><label for="leverageStage">改善するステージ</label><select id="leverageStage"></select></div><div class="field"><label for="lift">CVR改善幅</label><select id="lift"><option value="3">＋3ポイント</option><option value="5" selected>＋5ポイント</option><option value="10">＋10ポイント</option></select></div></div><div class="scenario-stat"><div><span>最上流で削減できる必要活動件数</span><strong id="savedTop">—</strong></div><div><span>改善後の最上流必要数</span><strong id="improvedTop">—</strong></div><p id="scenarioNote">数字を変更すると試算が更新されます。</p></div><p class="method-note">1ステージの計画CVRだけを改善した理論上の比較です。他の率が変わらず、結果が保証されるものではありません。</p></div>
+  </section>
+
+  <section class="export-section"><div><h2>分析結果を、会議のアクションへ。</h2><p>会議資料や日次レビューにそのまま使えるよう、テキストとCSVで出力できます。</p></div><div class="export-actions"><button id="copyReport" class="btn secondary" type="button">分析レポートをコピー</button><button id="downloadCsv" class="btn primary" type="button">CSVを保存</button></div><p id="exportStatus" role="status"></p></section>
+  <p class="privacy">プライバシー：入力した数値はこのブラウザのローカルストレージにのみ保存します。WORKKITのサーバーに送信しません。共有端末では初期化をご利用ください。</p>
+</main>
+<footer class="footer"><span>WORKKIT <b>.</b> / RM</span><a href="../../">ほかの無料ツールを見る</a></footer>
+</body>
+</html>
