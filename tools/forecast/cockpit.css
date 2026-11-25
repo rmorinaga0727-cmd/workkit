@@ -47,3 +47,28 @@ body #result-screen .ck-panel-head h2{font-size:26px;line-height:1.4;letter-spac
 .ck-stage-label,.ck-stage-value{font-size:28px}.ck-axis{font-size:24px}.ck-chart-number{font-size:26px}
 .ck-chart-heading{font-size:20px!important;font-weight:400;line-height:1.4;color:#a9c4df;display:block;min-height:44px!important;padding:0!important;margin:0 0 8px;text-align:left;width:100%;background:none;border:0}.ck-chart-heading:hover{color:#aff7ee}.ck-chart-heading:focus-visible{outline:2px solid #83e7e8;outline-offset:2px}
 .ck-stage-rate{font-size:26px}
+
+/* 220ms inspection feedback; no resting palette, typography or layout overrides. */
+.ck-data-target{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ck-dial>svg{transition:scale 220ms ease,filter 220ms ease;transform-origin:center}
+.ck-dial.is-inspected>svg{scale:1.012;filter:brightness(1.12)}
+.ck-target-row .ck-track,.ck-person .ck-track,.ck-sim-row .ck-track{transition:scale 220ms ease;transform-origin:center}
+.ck-target-row .ck-track i,.ck-person .ck-track i,.ck-sim-row .ck-track i{transition:filter 220ms ease}
+.ck-target-row.is-inspected .ck-track,.ck-person.is-inspected .ck-track,.ck-sim-row.is-inspected .ck-track{scale:1 1.12}
+.ck-target-row.is-inspected .ck-track i,.ck-person.is-inspected .ck-track i,.ck-sim-row.is-inspected .ck-track i{filter:brightness(1.18)}
+.ck-roadmap-dot{transition:scale 220ms ease,filter 220ms ease;transform-origin:center}
+.ck-roadmap-node.is-inspected .ck-roadmap-dot{scale:1.16;filter:brightness(1.2)}
+.ck-funnel-bar{transform-box:fill-box;transform-origin:center;transition:scale 220ms ease,filter 220ms ease}
+.ck-stage.is-inspected .ck-funnel-bar{scale:1 1.1;filter:brightness(1.18)}
+.ck-stage.is-focus.is-inspected .ck-funnel-bar{filter:brightness(1.18) drop-shadow(0 0 6px #a682ff6b)}
+.ck-point-hit{fill:transparent;stroke:none}
+.ck-point{transform-box:fill-box;transform-origin:center;transition:scale 220ms ease,filter 220ms ease}
+.ck-chart-number{transition:filter 220ms ease}
+.ck-trend-datum.is-inspected .ck-point{scale:1.4;filter:brightness(1.15)}
+.ck-trend-datum.is-inspected .ck-chart-number{filter:brightness(1.2) drop-shadow(0 0 3px currentColor)}
+.ck-data-target:focus-visible{outline:1px solid currentColor;outline-offset:3px}
+.ck-hover-tip{position:fixed;z-index:100;pointer-events:none;white-space:pre-line;max-width:min(360px,calc(100vw - 24px));padding:12px 16px;opacity:0;transition:opacity 220ms ease;line-height:1.5}
+.ck-hover-tip.is-visible{opacity:1}
+.ck-toggle-icon{display:inline-block;transform-origin:center;transition:transform 220ms ease}
+.ck-proposal[data-expanded=true] .ck-toggle-icon{transform:rotate(45deg)}
+@media(prefers-reduced-motion:reduce){.ck-data-target,.ck-data-target *,.ck-hover-tip,.ck-toggle-icon{transition:none!important}.ck-dial.is-inspected>svg,.ck-data-target.is-inspected .ck-track,.ck-data-target.is-inspected .ck-roadmap-dot,.ck-data-target.is-inspected .ck-funnel-bar,.ck-data-target.is-inspected .ck-point{scale:none}}
