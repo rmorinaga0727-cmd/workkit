@@ -1,0 +1,11 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),core=require('../import-core.js');
+const rows=[['営業日次'],['日付','担当者','目標','架電件数','成約件数'],['2026/11/01','A',20,100,2],['2026/11/02','A',20,120,3],['2026/11/01','B',15,80,1],['合計','',35,300,6]];
+const config={header:1,map:core.infer(rows[1]),mode:'daily'};
+test('detect title/header and Japanese count aliases',()=>{assert.equal(core.headerIndex(rows),1);assert.deepEqual(config.map,['date','person','target','stage0','stage5']);});
+test('daily sum, repeated target latest per person and total-row exclusion',()=>{const r=core.interpret(rows,config);assert.deepEqual(r.issues,[]);assert.equal(r.stages.at(-1).actual,6);assert.equal(r.target,35);assert.equal(r.totals,1);});
+test('latest cumulative snapshots carry forward to team history',()=>{const r=core.interpret(rows,{...config,mode:'cumulative'});assert.equal(r.stages.at(-1).actual,4);assert.deepEqual(r.timeline.map(p=>p.value),[3,4]);});
+test('aggregation choice and duplicated metric mapping require correction',()=>{assert(core.interpret(rows,{...config,mode:''}).issues.length);assert(core.interpret(rows,{...config,map:['date','person','target','stage0','stage0']}).issues.length);});
+test('invalid amounts and invalid calendar dates never become zeros',()=>{for(const value of ['',-1,1.5,'=1+1']){const r=structuredClone(rows);r[2][3]=value;assert(core.interpret(r,config).issues.length);}assert.equal(core.date('2026/02/30'),null);assert.equal(core.numeric('１,２００件'),1200);});
+test('same-person same-day nonidentical rows are warned for daily data and blocked for cumulative data',()=>{const r=[...rows,['2026/11/01','A',20,101,3]];assert(core.interpret(r,config).warnings.some(w=>w.includes('同一担当者')));assert(core.interpret(r,{...config,mode:'cumulative'}).issues.some(w=>w.includes('同一担当者')));});
+test('exact duplicate rows are excluded with visible warning',()=>{const r=core.interpret([...rows,rows[2]],config);assert.equal(r.duplicates,1);assert.equal(r.stages.at(-1).actual,6);});
+test('date and person filters limit the values actually applied',()=>{const r=core.interpret(rows,{...config,person:'A',from:'2026-11-02',to:'2026-11-02'});assert.equal(r.stages.at(-1).actual,3);assert.equal(r.selectedCount,1);});
