@@ -47,3 +47,10 @@ Work stopped for C000 / owner review of the released result. No unrelated RM mem
 - Current browser harness: ../quality-20261124/browser.cjs. It still uses its stage/vendor copy, ../v3/test-server.cjs, the established Playwright installation and three Downloads CSVs; preserve these dependencies until the cleanup proposal is approved.
 - The original local development record and necessary preview/validation dependencies are retained in the existing RM environment audit recovery record, outside Git.
 - This is local version preservation only: no main merge, push, release, feature change or cleanup-rule deployment.
+
+
+### Forecast release approved — 2026-11-26
+- The owner formally approved the8fe1469 cockpit design/features and authorized the forecast release,Git remote/main synchronization,and the existing Cloudflare Pages production deployment. Only percent display is revised:40%,45%,100%,49.2%,81.4%;calculation precision,48templates,files/storage,motion and existing three tools remain unchanged.
+- Regression evidence:134portable tests;PC/mobile percent,tooltips,all analysis workspaces,independent card controls,reduced-motion and numerical parity against8fe1469. Existing diagnosis/script/objection source assets and outputs are checked before/after release.
+- Target:https://workkit-shigoto.pages.dev/tools/forecast/ on existing workkit-shigoto. The retained prior production deployment59d5f5f0-6a67-4b2d-a47b-140c00be41b6 is the Cloudflare rollback target. No authentication,project setting,intake or unrelated-tool change is authorized.
+- Actual commit,deployment ID,production verification,source/recovery hashes and final publication outcome are registered in the existing RM workkit-forecast-development latest-source/release record;deployment success is recorded only after production checks. Previous local-only notes above are historical.

@@ -101,7 +101,7 @@
   const diagnosis=root.ForecastDiagnosis?root.ForecastDiagnosis.assess(d,dataset,m,{buckets},asOf):null;
   const p=diagnosis?.priorities?.[0],n=val=>Number.isFinite(val)?val.toLocaleString('ja-JP',{maximumFractionDigits:2}):'未算出';
   const conclusion=!hasGoal?'実績 '+n(d.achieved)+'件。目標未設定。':m.gap===0?'目標達成：実績 '+n(d.achieved)+'件 / 目標 '+n(d.target)+'件。':'目標未達：実績 '+n(d.achieved)+'件 / 目標 '+n(d.target)+'件（残り '+n(m.gap)+'件）。';
-  const sub=(hasGoal?'達成率 '+m.attainment.toLocaleString('ja-JP',{minimumFractionDigits:1,maximumFractionDigits:1})+'% / 予実差 '+n(d.achieved-d.target)+'件。':'')+(hasForecast?'着地予測 '+n(m.projected)+'件。':'着地予測は対象期間・営業日数の条件不足、または過去期間のため未算出。')+(diagnosis?.comparison?'前月比：最終成果 '+n(diagnosis.comparison.actualDelta)+'件。':'');
+  const sub=(hasGoal?'達成率 '+m.attainment.toLocaleString('ja-JP',{minimumFractionDigits:0,maximumFractionDigits:1})+'% / 予実差 '+n(d.achieved-d.target)+'件。':'')+(hasForecast?'着地予測 '+n(m.projected)+'件。':'着地予測は対象期間・営業日数の条件不足、または過去期間のため未算出。')+(diagnosis?.comparison?'前月比：最終成果 '+n(diagnosis.comparison.actualDelta)+'件。':'');
   const actions=diagnosis?.priorities.length?diagnosis.priorities.map(c=>({title:c.body,body:c.evidence+' / 最終成果への影響 +'+n(c.impact)+'件（条件付き）',evidence:c.formula})): [{title:hasGoal&&m.gap===0?'目標達成・残必要成果0件':'比較可能なKPIで実績を確認',body:'実績 '+n(d.achieved)+'件。'+(diagnosis?.comparison?'比較した工程で優先する低下候補はありません。':'比較基準がないため、ボトルネック・改善幅は未判定。'),evidence:'原因の断定や架空の改善幅は生成しません。'}];
   const nav=navigator(d,dataset,m),pipe={available:false};
   let stability=null,seasonality=null;if(complete.length>=12){const values=complete.map(p=>p.value),mean=values.reduce((a,b)=>a+b,0)/values.length;stability=mean>0?Math.sqrt(values.reduce((s,v)=>s+(v-mean)**2,0)/values.length)/mean:null;}
