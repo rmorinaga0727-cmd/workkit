@@ -72,3 +72,21 @@ body #result-screen .ck-panel-head h2{font-size:26px;line-height:1.4;letter-spac
 .ck-toggle-icon{display:inline-block;transform-origin:center;transition:transform 220ms ease}
 .ck-proposal[data-expanded=true] .ck-toggle-icon{transform:rotate(45deg)}
 @media(prefers-reduced-motion:reduce){.ck-data-target,.ck-data-target *,.ck-hover-tip,.ck-toggle-icon{transition:none!important}.ck-dial.is-inspected>svg,.ck-data-target.is-inspected .ck-track,.ck-data-target.is-inspected .ck-roadmap-dot,.ck-data-target.is-inspected .ck-funnel-bar,.ck-data-target.is-inspected .ck-point{scale:none}}
+
+/* Clear proposal disclosure control; all other cockpit styling is unchanged. */
+.ck-proposal-cards{align-items:stretch}
+.ck-proposal{position:relative}
+.ck-proposal summary{--ck-summary-x:22px;--ck-summary-y:22px;display:flex;flex-direction:column;height:100%}
+#forecastCockpit .ck-disclosure{display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;width:calc(100% + 2 * (var(--ck-summary-x) + 12px));min-height:56px;margin:auto calc(-1 * (var(--ck-summary-x) + 12px)) calc(-1 * (var(--ck-summary-y) + 12px));padding:12px 8px;border:0;border-top:1px solid #628bb84f;border-radius:0;background:linear-gradient(130deg,#17334c,#14243b);color:#a6e9ef;font:inherit;font-size:18px!important;line-height:1.5!important;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:box-shadow 220ms ease,filter 220ms ease}
+.ck-disclosure:hover,.ck-disclosure:focus-visible{box-shadow:inset 0 0 20px #67f5e924,0 -2px 16px #67f5e920;filter:brightness(1.12)}
+.ck-disclosure:focus-visible{outline:2px solid #83e7e8;outline-offset:-3px}
+.ck-disclosure-label{min-width:0}
+.ck-disclosure .ck-toggle-icon{flex-shrink:0}
+.ck-proposal[data-expanded=true] .ck-toggle-icon{transform:rotate(180deg)}
+#forecastCockpit .ck-proposal[open]{padding-bottom:56px!important}
+.ck-proposal[open] summary{height:auto}
+#forecastCockpit .ck-proposal[open] .ck-disclosure{position:absolute;bottom:0;left:0;width:100%;margin:0}
+@media(min-width:1101px){.ck-proposal summary{--ck-summary-x:14px;--ck-summary-y:18px}}
+@media(max-width:700px){.ck-proposal summary{--ck-summary-x:20px;--ck-summary-y:20px}}
+
+#forecastCockpit .ck-disclosure-label,#forecastCockpit .ck-disclosure .ck-toggle-icon{font-size:inherit!important;line-height:inherit!important}
